@@ -21,12 +21,15 @@ import me.rexsystems.rexPlayerWarps.storage.StoredSnapshot;
 import me.rexsystems.rexPlayerWarps.util.PapiBridge;
 import me.rexsystems.rexPlayerWarps.util.SchedulerUtils;
 import org.bukkit.command.PluginCommand;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.logging.Level;
 
 public final class RexPlayerWarps extends JavaPlugin {
+
+    private static final int BSTATS_PLUGIN_ID = 35273;
 
     private PluginConfig settings;
     private Categories categories;
@@ -84,6 +87,7 @@ public final class RexPlayerWarps extends JavaPlugin {
                 getLogger().log(Level.SEVERE, "Storage failed", failure);
             }
         });
+        new Metrics(this, BSTATS_PLUGIN_ID);
         getLogger().info("Enabled.");
     }
 
