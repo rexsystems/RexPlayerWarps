@@ -1,0 +1,16 @@
+# Created once. RexPlayerWarps reads this file and will not overwrite it.
+# The id under categories is what /rexplayerwarps set <warp> category expects.
+
+categories:
+  general:
+    display: "<white>General"
+    icon: COMPASS
+  shops:
+    display: "<gold>Shops"
+    icon: EMERALD
+  farms:
+    display: "<green>Farms"
+    icon: WHEAT
+  bases:
+    display: "<aqua>Bases"
+    icon: OAK_DOOR

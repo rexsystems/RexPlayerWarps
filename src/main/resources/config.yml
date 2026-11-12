@@ -1,0 +1,357 @@
+# RexPlayerWarps configuration.
+# config-version is used by the updater. Missing keys are filled in. Your values stay.
+# A backup named config.yml.bak.<timestamp> is written before a change is saved.
+# categories.yml is separate and is never overwritten.
+
+config-version: 1
+
+# sqlite writes plugins/RexPlayerWarps/<file>. mysql is optional.
+storage:
+  type: sqlite
+  sqlite:
+    file: warps.db
+  mysql:
+    host: 127.0.0.1
+    port: 3306
+    database: rexplayerwarps
+    username: root
+    password: ""
+    # Pool size is clamped to 1-20. SQLite always uses 1.
+    pool-size: 4
+
+# Empty whitelist means every world. A world on the blacklist is blocked even if it is also listed.
+worlds:
+  whitelist: []
+  blacklist: []
+
+defaults:
+  description: ""
+  icon: ENDER_PEARL
+  category: general
+  price: 0
+  access: public
+
+limits:
+  # Name length is clamped to 1-32. Description length is clamped to 1-512.
+  name-length: 24
+  description-length: 80
+  price-min: 0
+  price-max: 1000000
+  search-length: 32
+  # Recent view keeps this many of the viewer's latest visits.
+  recent-size: 27
+
+# full prints 10.50. short prints 1.2K, 3.4M, 5B.
+number-format: full
+
+# Type one of these words to clear a description with /set.
+description-clear: clear
+# Type this in chat to clear an active search.
+search-cancel: cancel
+
+unsafe:
+  confirm: true
+  # True when the feet position is below the world minimum height.
+  void: true
+  blocks:
+    - LAVA
+    - WATER
+    - FIRE
+    - SOUL_FIRE
+    - CACTUS
+    - SWEET_BERRY_BUSH
+
+teleport:
+  # Seconds. 0 charges (if the warp is not free) and teleports on the same tick the delay would have ended.
+  # Money is taken only after this delay, and only if the player is still eligible.
+  delay-seconds: 3
+  cancel-on-move: true
+  cancel-on-damage: true
+  # Owners skip the price, and the bank is not credited, when this is false.
+  owner-pays: false
+  price-confirm: true
+  confirm-seconds: 15
+
+economy:
+  # vault or command. command reads balance-placeholder and runs take/give as console.
+  mode: vault
+  command:
+    balance-placeholder: "%vault_eco_balance%"
+    take: "eco take {player} {amount}"
+    give: "eco give {player} {amount}"
+
+# The menu cycles these keys, in this order. Unknown keys are ignored.
+# Allowed: name, owner, rating, visits, newest, oldest, price, favorites, category.
+sorts:
+  - name
+  - owner
+  - rating
+  - visits
+  - newest
+  - oldest
+  - price
+  - favorites
+  - category
+
+sort-labels:
+  name: Name
+  owner: Owner
+  rating: Rating
+  visits: Visits
+  newest: Newest
+  oldest: Oldest
+  price: Price
+  favorites: Favorites
+  category: Category
+
+# An empty sound name plays nothing.
+sounds:
+  click:
+    sound: UI_BUTTON_CLICK
+    volume: 0.6
+    pitch: 1.2
+  teleport:
+    sound: ENTITY_ENDERMAN_TELEPORT
+    volume: 1.0
+    pitch: 1.0
+  error:
+    sound: ENTITY_VILLAGER_NO
+    volume: 1.0
+    pitch: 1.0
+  cancel:
+    sound: BLOCK_NOTE_BLOCK_BASS
+    volume: 1.0
+    pitch: 0.8
+  collect:
+    sound: ENTITY_EXPERIENCE_ORB_PICKUP
+    volume: 1.0
+    pitch: 1.2
+
+titles:
+  countdown:
+    enabled: true
+    title: "<yellow>Teleporting"
+    subtitle: "<gray>{seconds}s <dark_gray>- <white>{warp}"
+    fade-in: 0
+    stay: 15
+    fade-out: 5
+  arrived:
+    enabled: true
+    title: "<green>{warp}"
+    subtitle: "<gray>{owner}"
+    fade-in: 5
+    stay: 30
+    fade-out: 10
+
+actionbar:
+  countdown:
+    enabled: false
+    text: "<yellow>{warp} <gray>{seconds}s"
+
+bossbar:
+  countdown:
+    enabled: false
+    text: "<yellow>Teleporting to {warp}"
+    # PINK, BLUE, RED, GREEN, YELLOW, PURPLE, WHITE
+    color: YELLOW
+    # SOLID, SEGMENTED_6, SEGMENTED_10, SEGMENTED_12, SEGMENTED_20
+    style: SOLID
+
+particles:
+  teleport:
+    enabled: false
+    type: PORTAL
+    count: 24
+
+# Rows are clamped to 1-6. Slot -1 hides a button. Clicks outside this menu are not cancelled.
+gui:
+  rows: 6
+  title: "<dark_gray>Warps <gray>({page}/{pages})"
+  favorite-glow: true
+  clicks:
+    teleport: LEFT
+    favorite: RIGHT
+  filler:
+    material: GRAY_STAINED_GLASS_PANE
+    name: " "
+    lore: []
+    custom-model-data: 0
+    glow: false
+  warp-slots:
+    - 10
+    - 11
+    - 12
+    - 13
+    - 14
+    - 15
+    - 16
+    - 19
+    - 20
+    - 21
+    - 22
+    - 23
+    - 24
+    - 25
+    - 28
+    - 29
+    - 30
+    - 31
+    - 32
+    - 33
+    - 34
+  buttons:
+    previous:
+      slot: 45
+      material: ARROW
+      name: "<yellow>Previous"
+      lore:
+        - "<gray>Page {page}"
+      custom-model-data: 0
+      glow: false
+    next:
+      slot: 53
+      material: ARROW
+      name: "<yellow>Next"
+      lore:
+        - "<gray>{pages} pages"
+      custom-model-data: 0
+      glow: false
+    sort:
+      slot: 49
+      material: HOPPER
+      name: "<gold>Sort: <white>{sort}"
+      lore:
+        - "<gray>Click to cycle"
+      custom-model-data: 0
+      glow: false
+    search:
+      slot: 48
+      material: OAK_SIGN
+      name: "<aqua>Search"
+      lore:
+        - "<gray>{search}"
+      custom-model-data: 0
+      glow: false
+    recent:
+      slot: 47
+      material: CLOCK
+      name: "<yellow>Recent"
+      lore:
+        - "<gray>Warps you have used"
+      custom-model-data: 0
+      glow: false
+    favorites:
+      slot: 51
+      material: NETHER_STAR
+      name: "<light_purple>Favorites"
+      lore:
+        - "<gray>Only bookmarked warps"
+      custom-model-data: 0
+      glow: false
+    category:
+      slot: 50
+      material: BOOKSHELF
+      name: "<green>Category: <white>{category}"
+      lore:
+        - "<gray>Click to cycle"
+      custom-model-data: 0
+      glow: false
+    close:
+      slot: -1
+      material: BARRIER
+      name: "<red>Close"
+      lore: []
+      custom-model-data: 0
+      glow: false
+
+messages:
+  prefix: "<gray>[<gold>Warps<gray>] <reset>"
+  help:
+    - "{prefix}<yellow>/rexplayerwarps help <gray>- show this list"
+    - "{prefix}<yellow>/rexplayerwarps create <name>"
+    - "{prefix}<yellow>/rexplayerwarps delete <name>"
+    - "{prefix}<yellow>/rexplayerwarps set <name> <description|icon|category|price|access> <value>"
+    - "{prefix}<yellow>/rexplayerwarps list"
+    - "{prefix}<yellow>/rexplayerwarps open [search]"
+    - "{prefix}<yellow>/rexplayerwarps favorite <name>"
+    - "{prefix}<yellow>/rexplayerwarps rate <name> <1-5>"
+    - "{prefix}<yellow>/rexplayerwarps collect <name>"
+    - "{prefix}<yellow>/rexplayerwarps whitelist <name> <add|remove|list> [player]"
+    - "{prefix}<yellow>/rexplayerwarps reload"
+  no-permission: "{prefix}<red>You cannot do that."
+  players-only: "{prefix}<red>Only a player can do that."
+  storage-starting: "{prefix}<red>Warps are still loading."
+  reloaded: "{prefix}<green>Reloaded."
+  usage: "{prefix}<gray>Try <yellow>/rexplayerwarps help"
+  created: "{prefix}<green>Created <white>{warp}<green> at your feet."
+  name-invalid: "{prefix}<red>Warp names are {min}-{max} characters: letters, numbers, _ and -."
+  name-taken: "{prefix}<red>A warp named <white>{warp} <red>already exists."
+  limit: "{prefix}<red>Your warp limit is <white>{limit}<red>. You have <white>{count}<red>."
+  world-blocked: "{prefix}<red>Warps cannot be used in this world."
+  not-found: "{prefix}<red>No warp named <white>{warp}<red>."
+  not-owner: "{prefix}<red>That warp belongs to <white>{owner}<red>."
+  deleted: "{prefix}<green>Deleted <white>{warp}<green>."
+  delete-balance: "{prefix}<red>{warp} still has <white>{balance}<red> in the bank. Collect it first."
+  updated: "{prefix}<green>Updated <white>{field} <green>on <white>{warp}<green>."
+  description-long: "{prefix}<red>Descriptions stop at <white>{max} <red>characters."
+  icon-invalid: "{prefix}<red>Unknown item <white>{icon}<red>."
+  category-unknown: "{prefix}<red>Unknown category <white>{category}<red>."
+  price-invalid: "{prefix}<red>That price is not a number."
+  price-range: "{prefix}<red>Price must be from <white>{min} <red>to <white>{max}<red>."
+  access-invalid: "{prefix}<red>Access is public, private, or whitelist."
+  field-unknown: "{prefix}<red>Set description, icon, category, price, or access."
+  list-header: "{prefix}<yellow>Your warps <gray>({count}/{limit})"
+  list-line: "{prefix}<white>{warp} <dark_gray>| <gray>{access} <dark_gray>| <gray>{price} <dark_gray>| <gray>{visits} visits <dark_gray>| <gray>bank {balance}"
+  list-empty: "{prefix}<gray>You have no warps."
+  favorite-on: "{prefix}<green>Bookmarked <white>{warp}<green>."
+  favorite-off: "{prefix}<gray>Removed the bookmark for <white>{warp}<gray>."
+  rated: "{prefix}<green>Rated <white>{warp} <green>{score}<gray>/5."
+  rate-range: "{prefix}<red>Rate from 1 to 5."
+  collect-empty: "{prefix}<gray>{warp} has nothing to collect."
+  collected: "{prefix}<green>Collected <white>{balance} <green>from <white>{warp}<green>."
+  collect-failed: "{prefix}<red>Could not pay you. The bank for <white>{warp} <red>was left as it was."
+  whitelist-added: "{prefix}<green>Added <white>{player} <green>to <white>{warp}<green>."
+  whitelist-removed: "{prefix}<gray>Removed <white>{player} <gray>from <white>{warp}<gray>."
+  whitelist-have: "{prefix}<gray>{player} is already on <white>{warp}<gray>."
+  whitelist-missing: "{prefix}<gray>{player} is not on <white>{warp}<gray>."
+  whitelist-header: "{prefix}<yellow>{warp} <gray>whitelist"
+  whitelist-line: "{prefix}<white>{player}"
+  whitelist-empty: "{prefix}<gray>The whitelist is empty."
+  whitelist-usage: "{prefix}<gray>Use <yellow>/rexplayerwarps whitelist <name> <add|remove|list> [player]"
+  search-prompt: "{prefix}<gray>Type a warp name or an owner name. <yellow>{cancel} <gray>clears the search."
+  search-set: "{prefix}<green>Searching for <white>{search}<green>."
+  search-cleared: "{prefix}<gray>Search cleared."
+  search-long: "{prefix}<red>Keep the search under <white>{max} <red>characters."
+  confirm-price: "{prefix}<yellow>{warp} <gray>costs <white>{price}<gray>. Click it again to continue."
+  confirm-unsafe: "{prefix}<red>{warp} <gray>is at <white>{block}<gray>. Click it again to continue."
+  confirm-both: "{prefix}<red>{warp} <gray>costs <white>{price} <gray>and the spot is <white>{block}<gray>. Click it again to continue."
+  teleporting: "{prefix}<gray>Teleporting to <white>{warp} <gray>in <white>{seconds}s<gray>. Moving or taking damage cancels it."
+  cancel-move: "{prefix}<red>Teleport cancelled because you moved."
+  cancel-damage: "{prefix}<red>Teleport cancelled because you took damage."
+  arrived: "{prefix}<green>Teleported to <white>{warp}<green>."
+  teleport-failed: "{prefix}<red>Teleport to <white>{warp} <red>failed."
+  refunded: "{prefix}<yellow>Returned <white>{price}<yellow>."
+  refund-failed: "{prefix}<red>Teleport failed and the refund did not go through. Contact staff with the amount <white>{price}<red>."
+  broke: "{prefix}<red>You need <white>{price} <red>to visit <white>{warp}<red>."
+  economy-missing: "{prefix}<red>Paid warps need Vault, or economy.mode: command in the config."
+  cannot-visit: "{prefix}<red>You cannot visit <white>{warp}<red>."
+  already-teleporting: "{prefix}<gray>You are already teleporting."
+  world-missing: "{prefix}<red>The world for <white>{warp} <red>is not loaded."
+  warp-removed: "{prefix}<red>That warp was deleted."
+  page-empty: "{prefix}<gray>No warps match."
+  warp-name: "<white>{warp}"
+  warp-lore:
+    - "<gray>{description}"
+    - "<gray>Owner: <white>{owner}"
+    - "<gray>Category: <white>{category}"
+    - "<gray>Price: <white>{price}"
+    - "<gray>Rating: <white>{rating}"
+    - "<gray>Visits: <white>{visits}"
+    - "<gray>Favorites: <white>{favorites}"
+    - "<gray>Access: <white>{access}"
+    - "{favorite}"
+  lore-favorite-yes: "<light_purple>Bookmarked"
+  lore-favorite-no: "<dark_gray>Right-click to bookmark"
+  rating-empty: "None"
+  category-all: All
+  search-all: All
