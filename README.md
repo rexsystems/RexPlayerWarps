@@ -58,3 +58,7 @@ Aliases: `/rpwarp`, `/pwarp`
 The pages in [docs/](docs/index.md) drop into a Starlight site at `src/content/docs/rexplayerwarps/`. Paste `docs/sidebar.mjs` into the site sidebar.
 
 Full docs: [https://rexsystems.me/docs/rexplayerwarps](https://rexsystems.me/docs/rexplayerwarps)
+
+## License
+
+Licensed under the [GNU Affero General Public License v3.0](LICENSE).
