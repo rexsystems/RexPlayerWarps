@@ -44,4 +44,4 @@ Aliases: `/rpwarp`, `/pwarp`
 | `rexplayerwarps.admin` | op | Edit, delete, and visit warps you do not own |
 | `rexplayerwarps.warps.<n>` | false | Allows `<n>` warps. The highest matching node is the limit |
 
-Documentation: https://rexsystems.me/docs/rexplayerwarps
+Documentation: https://docs.rexsystems.me/rexplayerwarps/
